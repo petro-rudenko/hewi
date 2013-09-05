@@ -1,0 +1,12 @@
+@**
+@(user:User)(content: Html)(implicit appName: String)(implicit submenus: List[MenuItem])
+
+@main(appName){
+	<ul class="nav nav-pills " id="subnav">
+		@for (item <- submenus){
+        	<li @if (item.isActive){class="active"}><a href="@(item.url)">@(item.name)</a></li>
+  		}
+    </ul>
+    @content
+}
+**@

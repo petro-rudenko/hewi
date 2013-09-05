@@ -1,0 +1,30 @@
+@bg-color: #fff;
+@main-link-collor: #68be27;
+@hover-color: #e17000;
+
+
+body {
+  background-color: @bg-color;
+}
+
+html{
+  background-color: @bg-color;
+}
+
+
+
+.rounded-corners (@radius: 5px) {
+  border-radius: @radius;
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+}
+
+.main-wrapper{
+	.rounded-corners;
+	padding-top: 60px;
+	padding-left: 15px;
+}
+
+#subnav>li.active>a{
+	background-color: #18bc9c;
+}

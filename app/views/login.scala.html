@@ -1,0 +1,67 @@
+@(form: Form[Option[User]])
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <title>Login to HEWI</title>
+        <meta name="viewport" content="width=device-width">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <link rel="stylesheet" href="@routes.Assets.at("stylesheets/normalize.css")">
+
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        
+        
+        <link rel='stylesheet' href='@routes.WebJarAssets.at(WebJarAssets.locate("css/bootstrap.min.css"))'>
+        <link rel='stylesheet' href='@routes.WebJarAssets.at(WebJarAssets.locate("css/bootstrap-glyphicons.css"))'>
+        <link rel='stylesheet' href='@routes.Assets.at("stylesheets/login.css")'>
+        
+		<script type='text/javascript' src='@routes.WebJarAssets.at(WebJarAssets.locate("jquery.min.js"))'></script>
+		<script type='text/javascript' src='@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap.min.js"))'></script>
+        
+    </head>
+    <body>
+    	
+    	<!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+    	
+	    <div class="container">
+	    	@helper.form(routes.Application.authenticate, 'class ->"form-horizontal well form-signin", 'autocomplete ->"off"){
+								
+				
+				
+				<fieldset>
+					
+					@form.globalErrors.map { error =>
+      				<div class="alert alert-danger">
+        				@error.message
+      				</div>
+    				}
+				
+					<legend class="legend-welcome">
+						<img src="@routes.Assets.at("images/favicon.png")"> Welcome to HEWI
+					</legend>
+								
+					<div class="input-group input-group-lg">
+						<span class="input-group-addon glyphicon glyphicon-user"></span>
+						<input type="text" class="form-control" name="username" required="required" placeholder="Username" value="@form("username").value">
+					</div>
+					<br>
+	
+					<div class="input-group input-group-lg">
+						<span class="input-group-addon glyphicon glyphicon-lock"></span>
+						<input name="password" type="password" required="required" class="form-control" placeholder="Password" value="@form("password").value">
+					</div>
+					<br>
+						
+					<input type="submit" name="Submit" value="Login" class="btn btn-large btn-primary btn-block btn-success">
+			
+				</fieldset>
+			}
+		</div>
+    </body>
+</html>

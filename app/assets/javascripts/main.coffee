@@ -1,0 +1,2 @@
+$(document).ready ->
+	$("a").tooltip()
