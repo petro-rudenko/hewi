@@ -1,6 +1,8 @@
 import play.api._
+import play.api.mvc._
+import play.filters.gzip.GzipFilter
 import com.typesafe.config.ConfigFactory
 
-object Global extends GlobalSettings {
-	//val registeredApps = ConfigFactory.load("apps.conf").getList("registeredApps")
+object Global extends WithFilters(new GzipFilter()) with GlobalSettings {
+	//val registeredApps = ConfigFactory.load("apps.conf")
 }

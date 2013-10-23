@@ -25,7 +25,6 @@ trait AuthConfigImpl extends AuthConfig {
   type User = UserModel
 
 
-
   /**
    * A `ClassManifest` is used to retrieve an id from the Cache API.
    * Use something like this:
@@ -41,34 +40,37 @@ trait AuthConfigImpl extends AuthConfig {
    * A function that returns a `User` object from an `Id`.
    * You can alter the procedure to suit your application.
    */
-  def resolveUser(id: Id): Option[User] = throw new AssertionError("Use Async resolver!")
-  
-  override def resolveUserAsync(id: Id)(implicit context: ExecutionContext): Future[Option[User]] =
+  def resolveUser(id: Id)(implicit context: ExecutionContext): Future[Option[User]] =
     asyncTransactionalChain{implicit ctx => asyncById[UserModel](id) }   
   
   /**
    * Where to redirect the user after a successful login.
    */
-  def loginSucceeded(request: RequestHeader): Result = {
-    //val uri = request.session.get("access_uri").getOrElse("/about")
-    val uri = "/about"
-    Redirect(uri)
+  def loginSucceeded(request: RequestHeader)(implicit ctx: ExecutionContext): Future[SimpleResult] = {
+    val uri = request.session.get("access_uri").getOrElse("/config")
+    Future.successful(Redirect(uri))
   }
 
   /**
    * Where to redirect the user after logging out
    */
-  def logoutSucceeded(request: RequestHeader): Result = Redirect(controllers.routes.Application.login)
+  def logoutSucceeded(request: RequestHeader)(implicit context: scala.concurrent.ExecutionContext): scala.concurrent.Future[play.api.mvc.SimpleResult] = 
+    Future.successful(Redirect(controllers.routes.Application.login))
 
   /**
    * If the user is not logged in and tries to access a protected resource then redirect them as follows:
    */
-  def authenticationFailed(request: RequestHeader): Result = Redirect(controllers.routes.Application.login)
+  def authenticationFailed(request: RequestHeader)(implicit ctx: ExecutionContext): Future[SimpleResult] = 
+    Future.successful(Redirect(controllers.routes.Application.login).withSession(
+      "access_uri" ->(if (request.uri != "/") request.uri else "/config")))
+
 
   /**
    * If authorization failed (usually incorrect password) redirect the user as follows:
    */
-  def authorizationFailed(request: RequestHeader): Result = Forbidden("no permission")
+  def authorizationFailed(request: RequestHeader)(implicit ctx: ExecutionContext): Future[SimpleResult] =
+    Future.successful(Forbidden("no permission"))
+  
 
   /**
    * Whether use the secure option or not use it in the cookie.
@@ -90,12 +92,14 @@ trait AuthConfigImpl extends AuthConfig {
    * A function that determines what `Authority` a user has.
    * You should alter this procedure to suit your application.
    */
-  def authorize(user: User, authority: Authority): Boolean = {
-    (user.getUserStatus, authority) match {
-	      case (SuperUser, _) => true
-	      case (NormalUser, NormalUser) => true
-	      case _ => false
-	    }    
+  def authorize(user: User, authority: Authority)(implicit ctx: ExecutionContext): Future[Boolean] = Future.successful {
+    transactional {
+      (user.status, authority) match {
+	case (SuperUser, _) => true
+	case (NormalUser, NormalUser) => true
+	case _ => false
+      }
+    }
   }
 }
 

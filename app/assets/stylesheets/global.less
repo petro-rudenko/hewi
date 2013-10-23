@@ -11,8 +11,6 @@ html{
   background-color: @bg-color;
 }
 
-
-
 .rounded-corners (@radius: 5px) {
   border-radius: @radius;
   -webkit-border-radius: @radius;
@@ -25,6 +23,37 @@ html{
 	padding-left: 15px;
 }
 
+.main-content {
+	width: 95%;
+}
+
 #subnav>li.active>a{
 	background-color: #18bc9c;
 }
+
+.sortable {
+    cursor: pointer;
+    border-top: 3px solid #FFFFFF!important;
+    padding-left: 20px!important;
+}
+
+.sorting_asc {
+    .sortable;
+    background: url('/public/images/datatables/sort_ask.png') no-repeat center left;
+
+}
+
+.sorting_desc {
+    .sortable;
+    background: url('/public/images/datatables/sort_desk.png') no-repeat center left;
+}
+
+.sorting {
+    .sortable;
+    background: url('/public/images/datatables/sort_both.png') no-repeat center left;
+}
+
+.sorting:hover, .sorting_asc:hover, .sorting_desc:hover {
+    border-top: 3px solid #EEEEEE!important;
+}
+

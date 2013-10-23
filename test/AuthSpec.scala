@@ -5,7 +5,7 @@ import org.specs2.mutable._
 import play.api.test._
 import play.api.test.Helpers._
 import models._
-import models.HewiContext._
+import models.AppContext._
 import auth._
 
 class LoginSpec extends Specification {
@@ -15,7 +15,7 @@ class LoginSpec extends Specification {
       val users = transactional { all[User]}
       (users must be).empty
       val superUser = AuthProvider.getProvider.authenticate("test", "1111").get
-      transactional {superUser.status} must be (SuperUser)
+      (transactional {superUser.status}) must be (SuperUser)
       
       AuthProvider.getProvider.authenticate("user2", "1111") must be (None)
       val user3 = AuthProvider.getProvider.authenticate("test", "1111").get

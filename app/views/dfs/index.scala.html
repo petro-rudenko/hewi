@@ -1,0 +1,92 @@
+@()(implicit template: String => Html => Html)
+
+
+@template("Distributed file system browser"){
+<link rel='stylesheet' href="@routes.Assets.at("stylesheets/dfs.css")">
+<script type="text/javascript" src='@routes.WebJarAssets.at(WebJarAssets.locate("angular.min.js"))'></script>
+<script type="text/javascript" src='@routes.Assets.at("javascripts/ng-table.js")'></script>
+<script type="text/javascript" src='@routes.Assets.at("javascripts/dfs.js")'></script>
+
+
+
+<div class="main-content" ng-app="DfsApp" ng-controller="DfsCtrl" ng-init="init()">
+  <h2>Distributed file system browser</h2>
+  <div class="cluster box">
+    <div class="well well-sm"> 
+      <div class="input-group col-lg-2 input-group-sm">
+  	<span class="input-group-addon"><i class="icon-search"></i></span>
+  	<input type="search" ng-model="query" class="form-control " placeholder="Search...">
+      </div>
+            	
+      <button type="button" class="btn btn-default btn-sm"><i class="icon-text-width"></i> Rename</button>
+      <button type="button" class="btn btn-default btn-sm"><i class="icon-exchange"></i> Move</button>
+      <button type="button" class="btn btn-default btn-sm"><i class="icon-copy"></i> Copy</button>
+      <button type="button" class="btn btn-default btn-sm"><i class="icon-unlock-alt"></i> Change permission</button>
+      <button type="button" class="btn btn-default btn-sm"><i class="icon-cloud-download"></i> Download</button>
+      
+      <div class="btn-group">
+	<button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown">
+	  <i class="icon-remove"></i> Delete <span class="caret"></span>
+	</button>
+	<ul class="dropdown-menu" role="menu">
+	  <li><a href="#"><i class="icon-trash"></i> Move to trash</a></li>
+	  <li><a href="#"><i class="icon-remove-sign"></i> Delete forever</a></li>
+	</ul>
+      </div>
+      <div class="btn-group col-md-offset-1"><i class="icon-cloud"></i> HDFS</div>
+      <div class="pull-right">
+  	<div class="btn-group">
+	  <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown">
+	    <i class="icon-plus-sign"></i> New <span class="caret"></span>
+	  </button>
+	  <ul class="dropdown-menu" role="menu">
+	    <li><a href="#"><i class="icon-file"></i> File</a></li>
+	    <li><a href="#"><i class="icon-folder-open"></i> Folder</a></li>
+	  </ul>
+	</div>
+	  
+	<div class="btn-group">
+	  <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown">
+	    <i class="icon-cloud-upload"></i> Upload <span class="caret"></span>
+	  </button>
+	  <ul class="dropdown-menu" role="menu">
+	    <li><a href="#"><i class="icon-file"></i> Files</a></li>
+	    <li><a href="#"><i class="icon-archive"></i> Archive</a></li>
+	  </ul>
+  	</div>
+      </div>
+      
+    </div>
+   
+	
+    <ol class="breadcrumb">
+      <a class="home-link" href="#"><i class="icon-home"></i></a> 
+      <dt class="root-link"><a href="#">/</a></dt>
+      <li><a href="#">tmp</a></li>
+      <li><a href="#">path</a></li>
+      
+      <a class="edit-path btn-lg" href="#"><i class="icon-edit-sign"></i></a>
+      <a class="pull-right" href="#"><i class="icon-trash"></i> Trash</a>
+    </ol>
+   
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th><input type="checkbox"></th>
+          <th>Type</th>
+          <th>Name</th>
+          <th>Replication</th>
+          <th>Size</th>
+          <th>User</th>
+          <th>Group</th>
+          <th>Permission</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody ng-bind-html-unsafe="renderFs()">
+     </tbody>
+   </table>
+  </div> <!-- /Cluster -->
+</div> <!-- /main-content -->	
+	
+}

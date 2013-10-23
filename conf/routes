@@ -3,11 +3,25 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.login
-POST 	/authenticate				controllers.Application.authenticate
-GET		/config						controllers.Config.index
-GET		/about						controllers.About.index
+GET     /                       controllers.Application.login
+POST 	/authenticate		controllers.Application.authenticate
+GET    	/logout			controllers.Application.logout
+GET	/config                 controllers.Config.index
+
+
+# DFS
+GET	/dfs                    controllers.dfs.DfsCtrl.index
+GET     /dfs/homedir/get        controllers.dfs.DfsCtrl.getHomeDirectory
+GET     /dfs/listdir/*path      controllers.dfs.DfsCtrl.listdir(path)
+GET     /dfs/download/*path     controllers.dfs.DfsCtrl.download(path)
+
+
+#Nosql
+GET     /nosql/accumulo         controllers.nosql.AccumuloCtrl.index
+
+
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
-GET     /webjars/*file              controllers.WebJarAssets.at(file)
+GET     /assets/*file           controllers.Assets.at(path="/public", file)
+GET     /require.js             controllers.WebJarAssets.requirejs
+GET     /webjars/*file          controllers.WebJarAssets.at(file)

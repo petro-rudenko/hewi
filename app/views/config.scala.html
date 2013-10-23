@@ -1,8 +1,12 @@
-@main("Configuration"){
+@(title: String)(implicit template: String => Html => Html)
+
+@template("Distributed file systems"){
+<script type="text/javascript" src='@routes.Assets.at("javascripts/testcljs.js")'></script>
 	<ul class="nav nav-tabs nav-justified">
-  		<li class="active"><a href="#">Home</a></li>
-  		<li><a href="#">Profile</a></li>
-  		<li><a href="#">Messages</a></li>
+  		<li class="active"><a href="#">Dfs</a></li>
+  		<li><a href="#">Scripts</a></li>
+  		<li><a href="#">Sql</a></li>
+  		<li><a href="#">Db</a></li>
 	</ul>
 	<div class="main-wrapper">  
 		<a href="#" data-toggle="tooltip" title="first tooltip">Hover over me</a>

@@ -1,4 +1,4 @@
-@(title: String)(content: Html)
+@(user: User)(title: String)(content: Html)
 
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -7,7 +7,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <html>
     <head>
-        <title>@title</title>
+        <title>Big data ui | @title</title>
         <meta name="viewport" content="width=device-width">
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -21,6 +21,7 @@
         <link rel='stylesheet' href='@routes.WebJarAssets.at(WebJarAssets.locate("css/font-awesome.min.css"))'> 
         
 		<script type='text/javascript' src='@routes.WebJarAssets.at(WebJarAssets.locate("jquery.min.js"))'></script>
+
 		<script type='text/javascript' src='@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap.min.js"))'></script>
 		<script type='text/javascript' src='@routes.Assets.at("javascripts/main.min.js")'></script>
 	
@@ -36,7 +37,7 @@
     	<!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->  
-    <div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+    <header class="navbar navbar-default navbar-fixed-top navbar-inverse">
 		<div class="container">
             <div class="navbar-header">
               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
@@ -49,7 +50,7 @@
             <div class="navbar-collapse collapse navbar-inverse-collapse">
               <ul class="nav navbar-nav" id="menu-nav">
                 <li>
-                	<a class="btn btn-navbar btn-lg" href="#" data-toggle="tooltip" data-placement="bottom" title data-original-title="Distributed File Systems">
+                	<a class="btn btn-navbar btn-lg" href="/dfs" data-toggle="tooltip" data-placement="bottom" title data-original-title="Distributed File Systems">
                 		<span class="glyphicon glyphicon-folder-open"></span>
                		</a>
             	</li>
@@ -89,10 +90,18 @@
                 	</a>
                 </li>
                 
-                <li>
-                	<a class="btn btn-navbar btn-lg" data-toggle="tooltip" data-placement="bottom" title data-original-title="Databases" href="#">
-                		<span class="glyphicon glyphicon-th"></span>
+                <li class="dropdown">
+                	<a class="btn btn-navbar btn-lg dropdown-toggle"  class="dropdown-toggle" data-toggle="dropdown" data-placement="bottom" title data-original-title="Databases" href="#">
+                		<span class="glyphicon glyphicon-th"></span><b class="caret"></b>
                 	</a>
+                        <ul class="dropdown-menu">
+                          <li><a href="#"><i class="icon-h-sign"></i>
+                          Hbase</a></li>
+                          <li><a href="#"><i class="icon-adn"></i>
+                          Accumulo</a></li>
+                          <li><a href="#"><i class="icon-eye-open"></i> Cassandra</a></li>
+
+                        </ul>
                 </li>
                 
                 <li>
@@ -110,20 +119,23 @@
                 	</a>
                 </li>
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">User <b class="caret"></b></a>
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">@(user.username) <b class="caret"></b></a>
                   <ul class="dropdown-menu">
                     <li><a href="#"><i class="icon-user"></i> Profile</a></li>
                     <li class="divider"></li>
-                    <li><a href="#"><i class="icon-off"></i> Logout</a></li>
+                    <li><a href="@routes.Application.logout"><i class="icon-off"></i> Logout</a></li>
                   </ul>
                 </li>
               </ul>
             </div><!-- /.nav-collapse -->
         </div>
-    </div> 
-    <div class="main-wrapper ">  
+    </header> 
+    <main class="main-wrapper ">  
      @content
-	</div>
+	</main>
+	
+	<footer>
+	</footer>
 
     </body>
 </html>

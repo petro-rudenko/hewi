@@ -25,6 +25,6 @@ object AppContext extends ActivateContext{
   System.getProperties.put("activate.storage.default.password", password)
   System.getProperties.put("activate.storage.default.url", url)
   System.getProperties.put("activate.storage.default.dialect", dialect)
-  
+
   val storage = StorageFactory.fromSystemProperties("default")      
 }

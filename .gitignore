@@ -20,3 +20,4 @@ bin/
 *.sc
 .worksheet
 generated.keystore
+.ensime*
