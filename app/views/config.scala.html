@@ -1,14 +1,30 @@
 @(title: String)(implicit template: String => Html => Html)
 
-@template("Distributed file systems"){
-<script type="text/javascript" src='@routes.Assets.at("javascripts/testcljs.js")'></script>
-	<ul class="nav nav-tabs nav-justified">
-  		<li class="active"><a href="#">Dfs</a></li>
-  		<li><a href="#">Scripts</a></li>
-  		<li><a href="#">Sql</a></li>
-  		<li><a href="#">Db</a></li>
-	</ul>
-	<div class="main-wrapper">  
-		<a href="#" data-toggle="tooltip" title="first tooltip">Hover over me</a>
-	</div>
+@template("Configuration"){
+
+<!-- Nav tabs -->
+<ul class="nav nav-tabs">
+  <li><a href="#dfs" data-toggle="tab">DFS</a></li>
+  <li><a href="#sql" data-toggle="tab">SQL</a></li>
+  <li><a href="#resources" data-toggle="tab">Resource manager</a></li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+  <div class="tab-pane active" id="dfs">
+    <div class="conf-tab well col-md-5 pull-left">
+      <form class="form">
+        <div class="form-group has-error">
+          <label class="control-label" for="inputError">Wrong DFS uri!</label>
+          <input type="text" class="form-control" id="inputError" value="hdfs://nonexisting:8020/" placeholder="DFS uri">
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="tab-pane" id="sql">
+    
+  </div>
+  <div class="tab-pane" id="resources">.wefwef..</div>
+</div>
+
 }

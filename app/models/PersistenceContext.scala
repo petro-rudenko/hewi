@@ -13,7 +13,7 @@ object AppContext extends ActivateContext{
   val user = play.api.Play.current.configuration.getString("activate.storage.user").
   					getOrElse("")
   val password = play.api.Play.current.configuration.getString("activate.storage.password").
-  					getOrElse("")
+  					getOrElse("") //TODO: support obfuscation
   val url = play.api.Play.current.configuration.getString("activate.storage.url").
   					getOrElse("")
   val dialect = play.api.Play.current.configuration.getString("activate.storage.dialect").

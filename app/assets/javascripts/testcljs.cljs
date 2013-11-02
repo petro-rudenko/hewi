@@ -1,4 +1,5 @@
 (ns myapp
   (:use [jayq.core :only [$ css html]]))
 
-(js/alert "Hello5")
+(.log js/console "Hello5")
+

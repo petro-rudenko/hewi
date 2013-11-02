@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/petro-rudenko/bigdata-ui.png)](https://travis-ci.org/petro-rudenko/bigdata-ui)
 
 Attempt for making user interface for various big data tools.
 

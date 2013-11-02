@@ -11,9 +11,8 @@ import scala.concurrent.Future
 import views._
 
 
-
-trait App extends StackableController {
-  self: Controller with AuthElement with AuthConfigImpl =>
+trait App extends StackableController with AuthConfigImpl {
+  self: Controller with AuthElement  =>
     
     type Template = String => Html => Html
     
@@ -22,16 +21,17 @@ trait App extends StackableController {
   implicit def appName[A](implicit request: Request[A]) : String = name
   implicit def submenu[A](implicit request: Request[A]) : List[MenuItem]  
   */
-  implicit def user[A](implicit request: RequestWithAttributes[A])  = transactional {loggedIn(request)}
-
+  
   case object TemplateKey extends RequestAttributeKey[Template]
     
   abstract override def proceed[A](req: RequestWithAttributes[A])(f: RequestWithAttributes[A] => Future[SimpleResult]): Future[SimpleResult] = {
     transactional{
-    	val template: Template = html.main.apply(loggedIn(req))
-    	super.proceed(req.set(TemplateKey, template))(f)
+      val template: Template = html.main.apply(loggedIn(req))
+      super.proceed(req.set(TemplateKey, template))(f)
     }
   }
-    
+
+  
+  implicit def request[A](implicit req: RequestWithAttributes[A]) = req
   implicit def template[A](implicit req: RequestWithAttributes[A]): Template = req.get(TemplateKey).get
 }

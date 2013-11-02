@@ -5,20 +5,35 @@ import api.DfsImplicits._
 import auth._
 import core.App
 import java.io._
-import jp.t2v.lab.play2.auth.AuthElement
+import jp.t2v.lab.play2.auth.{AsyncAuth, AuthElement}
+import jp.t2v.lab.play2.stackc._
+import org.apache.hadoop.fs.Path
 import play.api._
 import play.api.libs.concurrent.Execution.Implicits._
-import play.api.libs.iteratee.{Enumerator, Iteratee}
-import play.api.libs.json._
-import org.apache.hadoop.fs.Path
-//import play.api.libs.MimeType
+import play.api.libs.iteratee.{Enumerator, Done, Iteratee}
+import play.api.libs.json.Json
 import play.api.mvc._
+import scala.concurrent.{ExecutionContext, Future}
 import views._
 
 
-object DfsCtrl extends Controller with App with AuthElement with AuthConfigImpl {
+trait UploadHandler extends Controller with AsyncAuth with AuthConfigImpl {
+  import scala.concurrent.ExecutionContext.Implicits.global
 
-  def index = StackAction(AuthorityKey -> NormalUser){
+  def hdfsUploader(path: String)(implicit context: ExecutionContext) = BodyParser {
+    request => Iteratee.flatten(authorized(NormalUser)(request, context).map {
+      case Right(user)  => parse.multipartFormData(DfsApi(user.username).hdfsUploadHandler(path))(request)
+      case Left(result) => Done[Array[Byte], Either[SimpleResult, (Path, User)]](Left(result))
+    })
+  }
+
+
+}
+
+
+object DfsCtrl extends Controller with App with AuthElement with AsyncAuth  with AuthConfigImpl with UploadHandler{
+  
+  def index = StackAction(AuthorityKey -> NormalUser) {
     implicit request => Ok(views.html.dfs.index())
   }
 
@@ -47,6 +62,11 @@ object DfsCtrl extends Controller with App with AuthElement with AuthConfigImpl 
       header = ResponseHeader(200, Map(CONTENT_LENGTH -> length.toString)),
       body = dataContent
     )
+  }
+
+
+  def upload(path: String) = authorizedAction(hdfsUploader(path), NormalUser){
+    user => implicit request => Ok("Uploaded")
   }
 
 }

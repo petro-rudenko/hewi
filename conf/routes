@@ -8,6 +8,12 @@ POST 	/authenticate		controllers.Application.authenticate
 GET    	/logout			controllers.Application.logout
 GET	/config                 controllers.Config.index
 
+# User admin
+GET    /users                   controllers.UserAdmin.index(page:Int ?= 0, orderBy:Int ?= 1, filter ?= "")
+GET    /users/json              controllers.UserAdmin.list(page:Int ?= 0, orderBy:Int ?= 1, filter ?= "")
+GET    /users/add               controllers.UserAdmin.addUser
+POST   /users/add               controllers.UserAdmin.save              
+GET    /users/edit/:id          controllers.UserAdmin.editUser(id)
 
 # DFS
 GET	/dfs                    controllers.dfs.DfsCtrl.index

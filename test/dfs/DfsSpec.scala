@@ -24,6 +24,10 @@ class DfsSpec extends Specification {
       dfs.write("/tmp/test", Enumerator("Hello world")) must throwA[IOException](message="File already exists: /tmp/test")
     }
 
+    "Upload files streamingly to hdfs" in {
+      todo
+    }
+
   }
   
 }

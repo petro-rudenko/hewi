@@ -8,11 +8,11 @@ class File
                 result = '<tr>'
                 result += '<td><input type="checkbox" ng-model="seleted"></td>'
                 if @isDirectory
-                        result += '<td><i class="icon-folder-close"></i></td>'
+                        result += '<td><i class="fa fa-folder"></i></td>'
                 else if @isSymlink
-                        result += '<td><i class="icon-external-link"></i></td>'
+                        result += '<td><i class="fa fa-external-link"></i></td>'
                 else
-                        result += '<td><i class="icon-file"></i></td>'
+                        result += '<td><i class="fa fa-file"></i></td>'
                 result += "<td>#{@name}</td>"
                 result += "<td>#{@replication}</td>"
                 result += '<td>15 Kb</td>'
@@ -29,11 +29,13 @@ class File
         $scope.fs = []
         $scope.init = () ->
                 if not $location.path()
-                        $http.get("/dfs/homedir/get").success(
-                                (result) ->
+                        $.ajax  "/dfs/homedir/get",
+                                type: "GET"
+                                async: false
+                                success: (result) ->
                                         $location.path(result.homedir)
                                         $scope.listdir()
-                        )
+
 
         $scope.listdir = () ->
                 if not $location.path()
@@ -48,7 +50,7 @@ class File
                 result = """
                 <tr>
                  <td></td>
-                 <td><i class="icon-folder-close"></i></td>
+                 <td><i class="fa fa-folder"></i></td>
                  <td>0</td>
                  <td>.</td>
                  <td></td>
@@ -59,7 +61,7 @@ class File
                 </tr>
                 <tr>
                  <td></td>
-                 <td><i class="icon-folder-close"></i><i class="icon-level-up"></i> </td>
+                 <td><i class="fa fa-folder"></i><i class="icon-level-up"></i> </td>
                  <td>0</td>
                  <td>..</td>
                  <td></td>
@@ -74,10 +76,10 @@ class File
                 for f in $scope.fs
                         result += f.render()
                 return result
-                          
+
+                        
                         
                 
-        
 app = angular.module("DfsApp", [])
 app.controller("DfsCtrl", @DfsCtrl)
-        
+

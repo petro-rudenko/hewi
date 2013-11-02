@@ -1,13 +1,16 @@
 package auth
+
+import com.unboundid.ldap.sdk.LDAPConnection
+import com.unboundid.util.ssl.{SSLUtil, TrustStoreTrustManager, TrustAllTrustManager}
+import jp.t2v.lab.play2.auth.{AuthConfig, AuthElement}
+import jp.t2v.lab.play2.stackc.StackableController
+import models.{AuthType, User => UserModel}
+import models.AppContext._
 import play.api._
 import play.api.mvc._
 import play.api.mvc.Results._
-import jp.t2v.lab.play2.auth.{AuthConfig, AuthElement}
-import jp.t2v.lab.play2.stackc.StackableController
-import models.{User => UserModel}
-import models.AppContext._
-import reflect.classTag
-import concurrent.{ExecutionContext, Future}
+import scala.concurrent.{ExecutionContext, Future}
+import scala.reflect.classTag
 
 
 trait AuthConfigImpl extends AuthConfig {
@@ -113,25 +116,64 @@ abstract class AbstractAuthProvider{
     
 }
 
+
 object OAuthProvider extends AbstractAuthProvider{
   def authenticate(username: String, password: String): Option[UserModel] = None  
 }
 
+
 object LDAPAuthProvider extends AbstractAuthProvider{
-  def authenticate(username: String, password: String): Option[UserModel] = None
+  def authenticate(username: String, password: String): Option[UserModel] = {
+    val host = play.api.Play.current.configuration.getString("auth.ldap.host").get
+    val port = play.api.Play.current.configuration.getInt("auth.ldap.port").getOrElse(389)
+    val bindDN = play.api.Play.current.configuration.getString("auth.ldap.bindDn").get
+    val usernamePattern = play.api.Play.current.configuration.getString("auth.ldap.unamePattern").get
+    val password = play.api.Play.current.configuration.getString("auth.ldap.password").get //TODO: obfuscation support
+    val certFile = play.api.Play.current.configuration.getString("auth.ldap.certificate").getOrElse(None)
+    val sslUtil: SSLUtil = certFile match {
+      case cert: String => new SSLUtil(new TrustStoreTrustManager(cert))
+      case None => new SSLUtil(new TrustAllTrustManager())
+    }
+
+
+
+    val connection: LDAPConnection = new LDAPConnection(sslUtil.createSSLSocketFactory(), host, port, bindDN, password);
+    val entry = connection.getEntry(usernamePattern.replace("<username>", username))
+    if (entry == null) return None
+    val passwd = entry.getAttributeValue("userPassword")
+    
+    if (passwd != password) return None
+
+    val fullName = entry.getAttributeValue("displayName") match {
+      case name: String => Some(name)
+      case null => None
+    }
+    val email = entry.getAttributeValue("mail") match {
+      case mail: String => Some(mail)
+      case null => None        
+    }
+
+    
+    UserModel.authenticateLDAPUser(username) match {
+      case Some(user) => Some(user)
+      case None if (firstUserEver) => Some(UserModel.createLDAPUser(username, SuperUser, email, fullName))
+      case None => Some(UserModel.createLDAPUser(username, NormalUser, email, fullName))  
+    }
+
+  }
 }
 
 object DefaultProvider extends AbstractAuthProvider{
   
   def authenticate(username: String, password: String): Option[UserModel] = {  
-    if (firstUserEver) Some(UserModel.createUser(username, password, SuperUser))
+    if (firstUserEver) Some(UserModel.createUser(username, password, AuthType.PLAIN, SuperUser))
     else UserModel.authenticate(username, password)
   }
 }
 
 object AllProviders extends AbstractAuthProvider{
   def authenticate(username: String, password: String): Option[UserModel] = {
-    DefaultProvider.authenticate(username, password)
+    DefaultProvider.authenticate(username, password).orElse(LDAPAuthProvider.authenticate(username, password)) 
   }
 }
 

@@ -21,3 +21,6 @@ bin/
 .worksheet
 generated.keystore
 .ensime*
+\#*\#
+.\#*
+*~

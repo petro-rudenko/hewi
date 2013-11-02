@@ -1,0 +1,71 @@
+@(form: Form[net.fwbrasil.activate.play.EntityData[User]])(implicit request: RequestHeader, template: String => Html => Html)
+
+
+@template("Useradmin -> Add user"){
+<div class="main-content">
+  <h2>User admin</h2>
+  <div class="well col-md-5 pull-left">
+    @helper.form(routes.UserAdmin.save, 'class ->"form-horizontal well"){
+    @helper.CSRF.formField
+				
+    @form.globalErrors.map { error =>
+    <div class="alert alert-danger">
+      @error.message
+    </div>
+    }
+    <fieldset>
+      <legend>Credentials information</legend>
+      
+      <div class="input-group input-group-sm @if(form("username").hasErrors) {has-error}">
+        <span class="input-group-addon glyphicon glyphicon-user"></span>
+        <input type="text" class="form-control" name="username" required="required" placeholder="Username" value="@form("username").value">
+      </div>
+      <br>
+
+      <div class="input-group input-group-sm @if(form("password.main").hasErrors) {has-error}">
+        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+        <input name="@(form("password.main").name)" type="password" required="required" 
+               class="form-control" placeholder="Password" value="@form("password.main").value">
+      </div>
+      <br>
+
+      <div class="input-group input-group-sm @if(form("password.confirm").hasErrors) {has-error}">
+        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+        <input name="password" type="password" required="required" class="form-control" placeholder="Repeat password" value="@form("password.confirm").value">
+      </div>
+      <br>
+    </fieldset>
+    
+    <fieldset>
+      <legend>Priviledges information</legend>
+        <div class="checkbox col-sm-2">
+          <input type="checkbox" class="form-control-sm" id="user-status"> 
+            Super User
+        </div>
+      <br>
+    </fieldset>
+    
+    <fieldset>
+      <legend>Additional information</legend>
+      
+      <div class="input-group input-group-sm @if(form("email").hasErrors) {has-error}">
+        <span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
+        <input name="email" type="email" class="form-control" placeholder="Email" value="@form("email").value">
+      </div>
+      <br>
+      <div class="input-group input-group-sm @if(form("fullName").hasErrors) {has-error}">
+        <span class="input-group-addon"><i class="fa fa-male"></i></span>
+        <input name="email" type="text"  class="form-control" placeholder="Full name" value="@form("fullName").value">
+      </div>
+      <br>
+      
+    </fieldset>
+
+      <input type="submit" class="btn btn-large btn-primary btn-block btn-success">
+      
+    
+  
+    }
+  </div>
+</div>
+}
