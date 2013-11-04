@@ -7,6 +7,7 @@
   <li><a href="#dfs" data-toggle="tab">DFS</a></li>
   <li><a href="#sql" data-toggle="tab">SQL</a></li>
   <li><a href="#resources" data-toggle="tab">Resource manager</a></li>
+  <li><a href="#common" data-toggle="tab">Common config</a></li>
 </ul>
 
 <!-- Tab panes -->
@@ -18,13 +19,29 @@
           <label class="control-label" for="inputError">Wrong DFS uri!</label>
           <input type="text" class="form-control" id="inputError" value="hdfs://nonexisting:8020/" placeholder="DFS uri">
         </div>
+        <div class="btn-group">
+          <button type="submit" class="btn btn-success">Save</button>
+        </div>
       </form>
     </div>
   </div>
   <div class="tab-pane" id="sql">
-    
+    <div class="conf-tab well col-md-5 pull-left">
+      <form class="form">
+        <div class="form-group has-success">
+          <label class="control-label" for="inputError">Hiveserver2 JDBC uri correct!</label>
+          <input type="text" class="form-control" id="inputError" value="jdbc:hive2://localhost:10000" placeholder="Hiveserver2 JDBC uri">
+        </div>
+        <div class="btn-group">
+          <button type="submit" class="btn btn-success">Save</button>
+        </div>
+      </form>
+    </div>    
   </div>
   <div class="tab-pane" id="resources">.wefwef..</div>
+  <div class="tab-pane" id="common">
+    
+  </div>
 </div>
 
 }

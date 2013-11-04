@@ -21,6 +21,9 @@ addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.2.1")
 
 addSbtPlugin("io.github.petro-rudenko" % "play-clojurescript" % "0.0.1")
 
+//https://github.com/jrudolph/sbt-dependency-graph -- For generating dependency graphs
+addSbtPlugin("net.virtual-void" % "sbt-dependency-graph" % "0.7.4")
+
 //Code style and Unit test coverage tools.
 addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "0.3.2")
 

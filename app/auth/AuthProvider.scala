@@ -135,8 +135,6 @@ object LDAPAuthProvider extends AbstractAuthProvider{
       case None => new SSLUtil(new TrustAllTrustManager())
     }
 
-
-
     val connection: LDAPConnection = new LDAPConnection(sslUtil.createSSLSocketFactory(), host, port, bindDN, password);
     val entry = connection.getEntry(usernamePattern.replace("<username>", username))
     if (entry == null) return None
@@ -152,7 +150,6 @@ object LDAPAuthProvider extends AbstractAuthProvider{
       case mail: String => Some(mail)
       case null => None        
     }
-
     
     UserModel.authenticateLDAPUser(username) match {
       case Some(user) => Some(user)

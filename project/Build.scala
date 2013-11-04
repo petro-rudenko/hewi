@@ -34,7 +34,7 @@ object ApplicationBuild extends Build {
     //"mysql" % "mysql-connector-java" % "5.1.26",
     "com.unboundid" % "unboundid-ldapsdk" % "2.3.4",
     "jp.t2v" %% "play2-auth"      % "0.11.0-SNAPSHOT",
-    "jp.t2v" %% "play2-auth-test" % "0.11.0-SNAPSHOT" % "test",
+    //"jp.t2v" %% "play2-auth-test" % "0.11.0-SNAPSHOT" % "test",
     "org.mindrot" % "jbcrypt" % "0.3m"
   ) ++ webjars ++ apache
 
@@ -49,6 +49,8 @@ object ApplicationBuild extends Build {
       "Typesafe Snapshots" at "http://repo.typesafe.com/typesafe/snapshots/",
       "Nexus Snapshot" at "https://oss.sonatype.org/content/repositories/snapshots",
       "Nexus release" at "https://oss.sonatype.org/service/local/staging/deploy/maven2"
-    )).settings(org.scalastyle.sbt.ScalastylePlugin.Settings: _*).settings(ScctPlugin.instrumentSettings : _*)
+    )).settings(org.scalastyle.sbt.ScalastylePlugin.Settings: _*).
+    settings(ScctPlugin.instrumentSettings : _*).
+    settings(net.virtualvoid.sbt.graph.Plugin.graphSettings: _*)
 
 }
