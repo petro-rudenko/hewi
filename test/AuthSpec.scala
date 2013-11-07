@@ -17,7 +17,7 @@ class LoginSpec extends Specification {
 
   def startLDAP: InMemoryDirectoryServer = {
 
-    val port = play.api.Play.current.configuration.getInt("auth.ldap.port").getOrElse(389)
+    val port = play.api.Play.current.configuration.getInt("auth.ldap.port").getOrElse(3890)
     val bindDN = play.api.Play.current.configuration.getString("auth.ldap.bindDn").get
     val password = play.api.Play.current.configuration.getString("auth.ldap.password").get //TODO: obfuscation support
     val certFile = play.api.Play.current.configuration.getString("auth.ldap.certificate").get
@@ -25,7 +25,7 @@ class LoginSpec extends Specification {
     val config = new InMemoryDirectoryServerConfig("dc=example,dc=com");
     config.addAdditionalBindCredentials(bindDN, password);
 
-    val serverKeyStore  = new File("test/resources/server.keystore");
+    val serverKeyStore  = new File(certFile);
     val serverSSLUtil: SSLUtil = new SSLUtil(
          new KeyStoreKeyManager(serverKeyStore, "password".toCharArray(),
               "JKS", "server-cert"),
@@ -64,7 +64,7 @@ class LoginSpec extends Specification {
     "Support LDAP Auth" in new WithApplication{
       val server = startLDAP
       val superUserOption = LDAPAuthProvider.authenticate("testAdminUser", "testPassword") 
-      superUserOption must beSome //TODO: fix it
+      superUserOption must beSome 
       server.shutDown(true)
     }
     

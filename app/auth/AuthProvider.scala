@@ -123,7 +123,7 @@ object OAuthProvider extends AbstractAuthProvider{
 
 
 object LDAPAuthProvider extends AbstractAuthProvider{
-  def authenticate(username: String, password: String): Option[UserModel] = {
+  def authenticate(username: String, formPassword: String): Option[UserModel] = {
     val host = play.api.Play.current.configuration.getString("auth.ldap.host").get
     val port = play.api.Play.current.configuration.getInt("auth.ldap.port").getOrElse(389)
     val bindDN = play.api.Play.current.configuration.getString("auth.ldap.bindDn").get
@@ -136,11 +136,13 @@ object LDAPAuthProvider extends AbstractAuthProvider{
     }
 
     val connection: LDAPConnection = new LDAPConnection(sslUtil.createSSLSocketFactory(), host, port, bindDN, password);
+
     val entry = connection.getEntry(usernamePattern.replace("<username>", username))
+
     if (entry == null) return None
     val passwd = entry.getAttributeValue("userPassword")
-    
-    if (passwd != password) return None
+
+    if (passwd != formPassword) return None
 
     val fullName = entry.getAttributeValue("displayName") match {
       case name: String => Some(name)

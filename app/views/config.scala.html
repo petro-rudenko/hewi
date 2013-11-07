@@ -38,9 +38,49 @@
       </form>
     </div>    
   </div>
-  <div class="tab-pane" id="resources">.wefwef..</div>
+  <div class="tab-pane" id="resources">
+    <div class="tab-pane active" id="dfs">
+      <div class="conf-tab well col-md-5 pull-left">
+        <form class="form">
+          <div class="form-group has-warning">
+            <label class="control-label" for="inputError">Yarn resource manager has 0 active nodes!</label>
+            <input type="text" class="form-control" id="inputError" value="localhost:8088" placeholder="yarn.resourcemanager.address">
+          </div>
+          <div class="btn-group">
+            <button type="submit" class="btn btn-success">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
   <div class="tab-pane" id="common">
-    
+    <div class="tab-pane active" id="dfs">
+      <div class="conf-tab well col-md-5 pull-left">
+        <form class="form">
+          <fieldset>
+            <legend>Enabled applications</legend>
+            <div class="checkbox">
+              <input type="checkbox" name="" value="" checked="checked" disabled="disabled"/> <label>File Browser</label>
+            </div>
+            <div class="checkbox">
+              <input type="checkbox" name="" value="" checked="checked" disabled="disabled"/> <label>Job Browser</label>
+            </div>
+            <div class="checkbox">
+              <input type="checkbox" name="" value="" checked="checked" /> <label>Pig</label>
+            </div>
+            <div class="checkbox">
+              <input type="checkbox" name="" value="" checked="checked" /> <label>Hive</label>
+            </div>
+            <div class="checkbox">
+              <input type="checkbox" name="" value=""  /> <label>Storm</label>
+            </div>
+          <fieldset>
+            <div class="btn-group">
+              <button type="submit" class="btn btn-success">Save</button>
+            </div>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
 
