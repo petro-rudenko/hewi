@@ -1,11 +1,11 @@
-[[https://travis-ci.org/petro-rudenko/hewi.png]]
+[[https://travis-ci.org/petro-rudenko/hewi/][https://travis-ci.org/petro-rudenko/hewi.png]]
 
 Hadoop Ecosystem Web Interface - attempt to make a user interface for various big data tools.
 
 * Distributed file systems browser:
 
 - [X]  [[http://i.imm.io/1kvBK.png]]
-
+  
 * Scripting layer:
 
 - [ ] Pig

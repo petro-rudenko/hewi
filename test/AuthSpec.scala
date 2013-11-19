@@ -13,7 +13,7 @@ import auth._
 
 
 
-class LoginSpec extends Specification {
+class AuthSpec extends Specification {
 
   def startLDAP: InMemoryDirectoryServer = {
 
@@ -51,8 +51,8 @@ class LoginSpec extends Specification {
   "Application" should {
            
     "Login first user as superuser with any username/password" in new WithApplication{
-      val users = transactional(readOnly) { all[User]}
-      (users must be).empty
+      val users = transactional(readOnly){ all[User]}
+      users must be empty
       val superUser = AuthProvider.getProvider.authenticate("test", "1111").get
       (transactional(readOnly) {superUser.status}) must be (SuperUser)
       
@@ -69,4 +69,8 @@ class LoginSpec extends Specification {
     }
     
   }
+}
+
+trait CleanDatabase extends After {
+  def after =  reinitializeContext
 }

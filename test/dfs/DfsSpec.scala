@@ -3,6 +3,7 @@ import api.DfsImplicits._
 import auth._
 import controllers.dfs.DfsCtrl
 import java.io.{FileNotFoundException, IOException}
+import models.AppContext._
 import org.specs2.mutable._
 import play.api.libs.iteratee.Enumerator
 import play.api.test.Helpers._
@@ -13,9 +14,8 @@ class DfsSpec extends Specification {
 
   "Distributed file system" should {
     val dfs = new DfsApi("file://tmp", "test")
+    def user = AuthProvider.getProvider.authenticate("test", "1111").get
 
-    lazy val user = AuthProvider.getProvider.authenticate("test", "1111").get
-    
     object config extends AuthConfigImpl
 
     "List directories" in {
@@ -54,4 +54,8 @@ class DfsSpec extends Specification {
 
   }
   
+}
+
+trait CleanDatabase extends After {
+  def after =  reinitializeContext
 }
