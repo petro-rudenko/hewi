@@ -20,6 +20,9 @@
           <input type="text" class="form-control" id="inputError" value="hdfs://nonexisting:8020/" placeholder="DFS uri">
         </div>
         <div class="btn-group">
+          <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-refresh"></span> Sync with Ambari</button>
+        </div>
+        <div class="btn-group">
           <button type="submit" class="btn btn-success">Save</button>
         </div>
       </form>
@@ -31,6 +34,9 @@
         <div class="form-group has-success">
           <label class="control-label" for="inputError">Hiveserver2 JDBC uri correct!</label>
           <input type="text" class="form-control" id="inputError" value="jdbc:hive2://localhost:10000" placeholder="Hiveserver2 JDBC uri">
+        </div>
+        <div class="btn-group">
+          <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-refresh"></span> Sync with Ambari</button>
         </div>
         <div class="btn-group">
           <button type="submit" class="btn btn-success">Save</button>
@@ -45,6 +51,9 @@
           <div class="form-group has-warning">
             <label class="control-label" for="inputError">Yarn resource manager has 0 active nodes!</label>
             <input type="text" class="form-control" id="inputError" value="localhost:8088" placeholder="yarn.resourcemanager.address">
+          </div>
+          <div class="btn-group">
+            <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-refresh"></span> Sync with Ambari</button>
           </div>
           <div class="btn-group">
             <button type="submit" class="btn btn-success">Save</button>
@@ -75,6 +84,10 @@
               <input type="checkbox" name="" value=""  /> <label>Storm</label>
             </div>
           <fieldset>
+            <div class="form-group has-warning">
+            <label class="control-label" for="inputSuccess">Ambari URL</label>
+            <input type="text" class="form-control" id="inputError" value="localhost:8080" placeholder="Ambari url">
+          </div>
             <div class="btn-group">
               <button type="submit" class="btn btn-success">Save</button>
             </div>

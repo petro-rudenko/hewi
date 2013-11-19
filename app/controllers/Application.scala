@@ -14,24 +14,24 @@ import models.AuthType._
 
 
 object Application extends Controller with OptionalAuthElement with LoginLogout with AuthConfigImpl{
-  
+
   val loginForm = Form {
     mapping(
-        "username" -> nonEmptyText, 
-        "password" -> nonEmptyText
-        )(AuthProvider.getProvider.authenticate)(_.map(u => (u.username, u.password.get))).
-    		verifying("Invalid username or password", result => result.isDefined)
+      "username" -> nonEmptyText,
+      "password" -> nonEmptyText
+    )(AuthProvider.getProvider.authenticate)(_.map(u => (u.username, u.password.get))).
+      verifying("Invalid username or password", result => result.isDefined)
   }
- 
-  
-  def login = AsyncStack { implicit request => 
+
+
+  def login = AsyncStack { implicit request =>
     val maybeUser: Option[User] = loggedIn
     maybeUser match {
       case Some(user) => gotoLoginSucceeded(maybeUser.get.id)
       case None => Future.successful(Ok(html.login(loginForm)))
-    }    
-  }  
-  
+    }
+  }
+
   def logout = Action.async { implicit request =>
     gotoLogoutSucceeded
   }
@@ -39,8 +39,8 @@ object Application extends Controller with OptionalAuthElement with LoginLogout 
   def authenticate = Action.async {
     implicit request => loginForm.bindFromRequest.fold(
       formWithErrors => Future.successful(BadRequest(html.login(formWithErrors))),
-        user         => gotoLoginSucceeded(user.get.id)
+      user         => gotoLoginSucceeded(user.get.id)
     )
   }
-  
+
 }

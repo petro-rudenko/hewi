@@ -22,14 +22,15 @@ object DfsImplicits{
 
   implicit class FileStatusJson(fs: FileStatus) {
     def toJson: JsObject = JsObject(Seq(
-      "path" -> JsString(fs.getPath.toString),
+      "path" -> JsString(Path.getPathWithoutSchemeAndAuthority(fs.getPath).toString),
       "isDirectory" -> JsBoolean(fs.isDirectory),
+      "isSymlink" -> JsBoolean(fs.isSymlink),
+      "isFile" -> JsBoolean(fs.isFile),
       "modification_time" -> JsNumber(fs.getModificationTime),
       "access_time" -> JsNumber(fs.getAccessTime),
       "owner" -> JsString(fs.getOwner),
       "group" -> JsString(fs.getGroup),
       "permission" -> JsString(fs.getPermission.toString),
-      "isSymlink" -> JsBoolean(fs.isSymlink),
       "replication" -> JsNumber(fs.getReplication),
       "length" -> JsNumber(fs.getLen())
     ))
@@ -68,17 +69,12 @@ class DfsApi (val defaultFS: String, val username: String){
     *
     * @return "/user/ + username" directory if it exists otherwice "/"
     */
-  def getHomeDir(user: String = username): String = {
+  def homeDir(user: String = username): String = {
     if (dfs.isDirectory("/user/" + user)) "/user/" + user else "/"
   }
 
-  def getFileStatus(path: Path): FileStatus = {
-    ugi.doAs(new PrivilegedExceptionAction[FileStatus]() {
-      def run = {dfs.getFileStatus(path)}
-    })
-  }
 
-  def setPermission(path: Path, mode: Short) = {
+  def chmod(path: Path, mode: Short) = {
     ugi.doAs(new PrivilegedExceptionAction[Unit]() {
       def run = {dfs.setPermission(path, new FsPermission(mode)) }
     })
@@ -87,6 +83,25 @@ class DfsApi (val defaultFS: String, val username: String){
   def open(path: Path) = {
     ugi.doAs(new PrivilegedExceptionAction[FSDataInputStream]() {
       def run = {dfs.open(path)}
+    })
+  }
+
+  /** 
+    * Return a file status object that represents the path.
+    * @param f - The path we want information from
+    * @return a FileStatus object
+    * @throws FileNotFoundException - when the path does not exist; IOException see specific implementation
+    * @throws IOException
+    */ 
+  def fileStatus(path: Path): FileStatus = {
+    ugi.doAs(new PrivilegedExceptionAction[FileStatus]() {
+      def run = {dfs.getFileStatus(path)}
+    })
+  }
+
+  def mkdir(path: Path) = {
+    ugi.doAs(new PrivilegedExceptionAction[Boolean]() {
+      def run = {dfs.mkdirs(path)}
     })
   }
 
@@ -114,9 +129,9 @@ class DfsApi (val defaultFS: String, val username: String){
     })
   }
 
-  /**
+  /** 
     * HDFS Upload Body Parser. Doesn't buffer whole file before upload to HDFS, but rather directly upload each comming chunk to HDFS.
-    * */
+    */ 
   def hdfsUploadHandler(path: Path) = BodyParsers.parse.Multipart.handleFilePart {
     case BodyParsers.parse.Multipart.FileInfo(partName, filename, contentType) =>
       val outputStream = dfs.create(new Path(path, filename), false)
@@ -150,6 +165,7 @@ object DfsApi {
 
   def apply(username: String) = {
     new DfsApi("webhdfs://127.0.0.1:50070", username)
+    //new DfsApi("file:///tmp", username)
   }
 
 }

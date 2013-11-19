@@ -7,12 +7,10 @@ import core.App
 import auth._
 import views._
 
-
 object Config extends Controller with App with AuthElement with AuthConfigImpl {
-	
-  def index = StackAction(AuthorityKey -> SuperUser){     
+
+  def index = StackAction(AuthorityKey -> SuperUser){
     implicit request => Ok(html.config("Config"))
   }
-  
-  
+
 }

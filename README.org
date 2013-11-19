@@ -1,0 +1,50 @@
+[[https://travis-ci.org/petro-rudenko/hewi.png]]
+
+Hadoop Ecosystem Web Interface - attempt to make a user interface for various big data tools.
+
+* Distributed file systems browser:
+
+- [X]  [[http://i.imm.io/1kvBK.png]]
+
+* Scripting layer:
+
+- [ ] Pig
+- [ ] Cascading (Scalding, Cascalog)
+- [ ] Spark shell
+
+* Sql layer:
+
+- [ ] Hive
+- [ ] [[https://github.com/amplab/shark/wiki][Shark]]
+
+* Stream processing layer:
+
+- [ ] Storm
+- [ ] [[http://samza.incubator.apache.org/][Samza]]
+
+* Resource manager layer:
+
+- [ ] Yarn
+- [ ] Mesos
+
+* Workflow layer:
+
+- [ ] Oozie
+- [ ] [[http://data.linkedin.com/opensource/azkaban][Azkaban]]
+
+* Graph Db layer:
+
+- [ ] [[http://thinkaurelius.com/][Aurelius]]
+- [ ] [[http://www.orientdb.org/][OrientDB]]
+
+* Nosql DB layer:
+
+- [ ] HBase
+- [ ] Accumulo
+- [ ] Cassandra
+
+* Transport layer:
+  
+- [ ] Sqoop
+- [ ] Flume
+- [ ] Kafka

@@ -10,10 +10,11 @@ object ApplicationBuild extends Build {
     
   val webjars = Seq(
     "org.webjars" % "webjars-play_2.10" % "2.2.0",
-    "org.webjars" % "font-awesome" % "4.0.0",
+    "org.webjars" % "font-awesome" % "4.0.3",
     "org.webjars" % "bootswatch" % "3.0.0",
     "org.webjars" % "bootstrap-glyphicons" % "bdd2cbfba0",
-    "org.webjars" % "angularjs" % "1.0.8"
+    "org.webjars" % "jquery-file-upload" % "8.4.2",
+    "org.webjars" % "knockout" % "3.0.0"
   )
 
   val HADOOP_VERSION = "2.2.0"
@@ -23,6 +24,8 @@ object ApplicationBuild extends Build {
     "org.apache.hadoop" % "hadoop-mapreduce" % HADOOP_VERSION,
     "org.apache.pig" % "pig" % "0.12.0",
     "org.apache.hive" % "hive-jdbc" % "0.12.0",
+    "org.apache.hbase" % "hbase-common" % "0.96.0-hadoop2",
+    "org.apache.hbase" % "hbase-client" % "0.96.0-hadoop2",
     "org.apache.accumulo" % "accumulo" % "1.5.0"
   )
 
@@ -33,8 +36,8 @@ object ApplicationBuild extends Build {
     "net.fwbrasil" %% "activate-jdbc" % "1.5-SNAPSHOT",
     //"mysql" % "mysql-connector-java" % "5.1.26",
     "com.unboundid" % "unboundid-ldapsdk" % "2.3.4",
-    "jp.t2v" %% "play2-auth"      % "0.11.0-SNAPSHOT",
-    //"jp.t2v" %% "play2-auth-test" % "0.11.0-SNAPSHOT" % "test",
+    "jp.t2v" %% "play2-auth"      % "0.11.0",
+    "jp.t2v" %% "play2-auth-test" % "0.11.0" % "test",
     "org.mindrot" % "jbcrypt" % "0.3m"
   ) ++ webjars ++ apache
 

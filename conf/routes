@@ -17,14 +17,14 @@ GET    /users/edit/:id          controllers.UserAdmin.editUser(id)
 
 # DFS
 GET	/dfs                    controllers.dfs.DfsCtrl.index
-GET     /dfs/homedir/get        controllers.dfs.DfsCtrl.getHomeDirectory
+GET     /dfs/browse/*path       controllers.dfs.DfsCtrl.browse(path)
 GET     /dfs/listdir/*path      controllers.dfs.DfsCtrl.listdir(path)
-GET     /dfs/download/*path     controllers.dfs.DfsCtrl.download(path)
+GET     /dfs/download/*files    controllers.dfs.DfsCtrl.download(files)
+GET     /dfs/concat/*files      controllers.dfs.DfsCtrl.concat(files)
 
 
 #Nosql
 GET     /nosql/accumulo         controllers.nosql.AccumuloCtrl.index
-
 
 
 # Map static resources from the /public folder to the /assets URL path

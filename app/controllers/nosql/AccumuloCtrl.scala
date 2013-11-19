@@ -7,11 +7,10 @@ import core.App
 import auth._
 import views._
 
-object AccumuloCtrl extends Controller with App with AuthElement with AuthConfigImpl { 
+object AccumuloCtrl extends Controller with App with AuthElement with AuthConfigImpl {
 
-  def index = StackAction(AuthorityKey -> NormalUser){     
+  def index = StackAction(AuthorityKey -> NormalUser){
     implicit request => Ok(views.html.nosql.accumulo.index())
   }
 
-  
 }
