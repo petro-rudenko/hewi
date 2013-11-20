@@ -111,6 +111,12 @@ class DfsApi (val defaultFS: String, val username: String){
     })
   }
 
+  def rename(src: Path, dst: Path) = {
+     ugi.doAs(new PrivilegedExceptionAction[Boolean]() {
+      def run = {dfs.rename(src, dst)}
+    })
+  }
+
   def write(path: Path, content: Enumerator[Array[Byte]], offset: Int = 0) = {
     ugi.doAs(new PrivilegedExceptionAction[Unit]() {
       def run = {

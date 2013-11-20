@@ -49,8 +49,35 @@ class DfsView
                         console.log $(@)
                 @editPath = () ->
                         $("#pathInput").show()
+                @newFileName = ko.observable()
+                @newDirName = ko.observable()
+                @createFile = () ->
+                        $.post "/dfs/file/new", {path: @path(), name: @newFileName()}, (success) ->
+                                self.getData()
+                                self.newFileName(null)
+                                $("#newFile").modal('hide')
+                @createDir = () ->
+                        $.post "/dfs/dir/new", {path: @path(), name: @newDirName()}, (success) ->
+                                self.getData()
+                                self.newDirName(null)
+                                $("#newDir").modal('hide')
+                @chownUsername = ko.observable()
+                @chownGroup = ko.observable()
+                @chown = () ->
+                        if !@chownUsername && !@chownGroup
+                                $("#chownErrors").show().html("Either username or group should be specified")
+                                return false
+                @selectedFileName = () ->
+                        if (@selectedItems().length != 1)
+                                null
+                        else
+                                @selectedItems()[0].name
+                @rename = () ->
+                        $.post "/dfs/file/rename", {path: @selectedItems()[0].path, name: $("#renameDstName").val()}, () ->
+                                self.getData()
+                                $("#rename").modal('hide')
                         
-                
 
 $ ->
     ko.applyBindings(new DfsView)
+

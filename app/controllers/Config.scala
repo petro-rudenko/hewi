@@ -13,4 +13,9 @@ object Config extends Controller with App with AuthElement with AuthConfigImpl {
     implicit request => Ok(html.config("Config"))
   }
 
+  def foo = StackAction(AuthorityKey -> SuperUser){
+    implicit request => Ok("todo")
+  }
+
+
 }

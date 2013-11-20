@@ -1,0 +1,114 @@
+<!-- Modals -->
+<!-- New File -->
+<div class="modal fade" id="newFile">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form data-bind="submit: createFile">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Create new file</h4>
+        </div>
+        <div class="modal-body">
+          <div class="input-group">
+            <span class="input-group-addon glyphicon glyphicon-file"></span>
+            <input type="text" class="form-control" id="fileName" placeholder="File name" required="required" data-bind="value: newFileName">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-default btn-success btn-sm">Create</button>
+        </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- /New File -->
+
+<!-- New Directory -->
+<div class="modal fade" id="newDir">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form data-bind="submit: createDir">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Create new folder</h4>
+        </div>
+        <div class="modal-body">
+          <div class="input-group">
+            <span class="input-group-addon glyphicon glyphicon-folder-close"></span>
+            <input type="text" class="form-control"  placeholder="Folder name" required="required" data-bind="value: newDirName">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-default btn-success btn-sm">Create</button>
+        </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- /New Directory -->
+
+<!-- Chown -->
+<div class="modal fade" id="chown">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form data-bind="submit: chown">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Change owner</h4>
+        </div>
+        <div class="modal-body">
+          <div class="alert alert-danger" id="chownErrors" style="display: none;">
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon glyphicon glyphicon-user"></span>
+            <input type="text" class="form-control"  placeholder="Username" data-bind="value: chownUsername">
+          </div><br>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-users"></i></span>
+            <input type="text" class="form-control"  placeholder="Group" data-bind="value: chownGroup">
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox"> Recursive
+            </label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-default btn-success btn-sm">Submit</button>
+        </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- /Chown -->
+
+<!-- Rename -->
+<div class="modal fade" id="rename">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form data-bind="submit: rename">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Rename</h4>
+        </div>
+        <div class="modal-body">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-file-text"></i></span>
+            <input type="text" class="form-control"  placeholder="File name" id="renameDstName" data-bind="value: selectedFileName()">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-default btn-success btn-sm">Rename</button>
+        </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- /Rename -->
+
+
+<!-- /Modals -->	

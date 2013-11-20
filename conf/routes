@@ -8,6 +8,7 @@ POST 	/authenticate		controllers.Application.authenticate
 GET    	/logout			controllers.Application.logout
 GET	/config                 controllers.Config.index
 
+
 # User admin
 GET    /users                   controllers.UserAdmin.index(page:Int ?= 0, orderBy:Int ?= 1, filter ?= "")
 GET    /users/json              controllers.UserAdmin.list(page:Int ?= 0, orderBy:Int ?= 1, filter ?= "")
@@ -21,6 +22,9 @@ GET     /dfs/browse/*path       controllers.dfs.DfsCtrl.browse(path)
 GET     /dfs/listdir/*path      controllers.dfs.DfsCtrl.listdir(path)
 GET     /dfs/download/*files    controllers.dfs.DfsCtrl.download(files)
 GET     /dfs/concat/*files      controllers.dfs.DfsCtrl.concat(files)
+POST    /dfs/file/new           controllers.dfs.DfsCtrl.touch
+POST    /dfs/file/rename           controllers.dfs.DfsCtrl.rename
+POST    /dfs/dir/new            controllers.dfs.DfsCtrl.mkdir
 
 
 #Nosql

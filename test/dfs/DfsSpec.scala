@@ -4,6 +4,7 @@ import auth._
 import controllers.dfs.DfsCtrl
 import java.io.{FileNotFoundException, IOException}
 import models.AppContext._
+import models.User
 import org.specs2.mutable._
 import play.api.libs.iteratee.Enumerator
 import play.api.test.Helpers._
@@ -14,7 +15,7 @@ class DfsSpec extends Specification {
 
   "Distributed file system" should {
     val dfs = new DfsApi("file://tmp", "test")
-    def user = AuthProvider.getProvider.authenticate("test", "1111").get
+    lazy val user = AuthProvider.getProvider.authenticate("test", "1111").get
 
     object config extends AuthConfigImpl
 
@@ -33,11 +34,12 @@ class DfsSpec extends Specification {
     }
 
     "Upload files streamingly to hdfs" in new WithApplication{
-      val request = FakeRequest().withLoggedIn(config)(user.id)
+      //val request = FakeRequest().withLoggedIn(config)(user.id)
       todo
     }
 
     "Download files from HDFS" in new WithApplication{
+       try {transactional(readWrite){ all[User].foreach(_.delete)}} // https://groups.google.com/forum/#!searchin/activate-persistence/activatetest/activate-persistence/I0sHxv4WatI/l1mw2bAJDdcJ
       val request = FakeRequest().withLoggedIn(config)(user.id)
       try { dfs.delete("/tmp/test.txt") }
       dfs.write("/tmp/test.txt", Enumerator("Hello world"))
@@ -56,6 +58,3 @@ class DfsSpec extends Specification {
   
 }
 
-trait CleanDatabase extends After {
-  def after =  reinitializeContext
-}

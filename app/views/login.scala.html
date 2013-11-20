@@ -33,7 +33,7 @@
     	
     <div class="container">
       @helper.form(routes.Application.authenticate, 'class ->"form-horizontal well form-signin", 'autocomplete ->"off"){
-    @helper.CSRF.formField	
+      @helper.CSRF.formField	
     
     <fieldset>
       @form.globalErrors.map { error =>

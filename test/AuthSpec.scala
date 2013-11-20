@@ -51,6 +51,7 @@ class AuthSpec extends Specification {
   "Application" should {
            
     "Login first user as superuser with any username/password" in new WithApplication{
+      try {transactional(readWrite){ all[User].foreach(_.delete)}} // https://groups.google.com/forum/#!searchin/activate-persistence/activatetest/activate-persistence/I0sHxv4WatI/l1mw2bAJDdcJ
       val users = transactional(readOnly){ all[User]}
       users must be empty
       val superUser = AuthProvider.getProvider.authenticate("test", "1111").get
@@ -62,6 +63,7 @@ class AuthSpec extends Specification {
     }
 
     "Support LDAP Auth" in new WithApplication{
+      try {transactional(readWrite){ all[User].foreach(_.delete)}} // https://groups.google.com/forum/#!searchin/activate-persistence/activatetest/activate-persistence/I0sHxv4WatI/l1mw2bAJDdcJ
       val server = startLDAP
       val superUserOption = LDAPAuthProvider.authenticate("testAdminUser", "testPassword") 
       superUserOption must beSome 
@@ -69,8 +71,5 @@ class AuthSpec extends Specification {
     }
     
   }
-}
 
-trait CleanDatabase extends After {
-  def after =  reinitializeContext
 }

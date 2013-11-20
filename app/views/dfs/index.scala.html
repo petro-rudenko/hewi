@@ -16,15 +16,21 @@
   	<input type="search" ng-model="query" class="form-control " placeholder="Search...">
       </div>
             	
-      <button type="button" class="btn btn-default btn-sm" data-bind="enable: selectedItems().length == 1"><i class="fa fa-text-width"></i> Rename</button>
+      <button type="button" class="btn btn-default btn-sm" data-bind="enable: selectedItems().length == 1" data-toggle="modal" data-target="#rename">
+        <i class="fa fa-text-width"></i> Rename
+      </button>
       <button type="button" class="btn btn-default btn-sm" data-bind="enable: selectedItems().length"><i class="fa fa-exchange"></i> Move</button>
       <button type="button" class="btn btn-default btn-sm" data-bind="enable: selectedItems().length"><i class="fa fa-copy"></i> Copy</button>
       <button type="button" class="btn btn-default btn-sm" data-bind="enable: selectedItems().length"><i class="fa fa-unlock-alt"></i> Change permission</button>
-      <button type="button" class="btn btn-default btn-sm" data-bind="enable: selectedItems().length"><i class="fa fa-users"></i> Change owner</button>
+      <button type="button" class="btn btn-default btn-sm" data-bind="enable: selectedItems().length" data-toggle="modal" data-target="#chown">
+        <i class="fa fa-users"></i> Change owner
+      </button>
       <button type="button" class="btn btn-default btn-sm" data-bind="enable: selectedItems().length, click: downloadFiles">
         <i class="fa fa-cloud-download"></i> Download
       </button>
-      <button type="button" class="btn btn-default btn-sm" data-bind="enable: concatEnabled(), click: concatFiles"><i class="fa fa-angle-double-down"></i> Concat</button>
+      <button type="button" class="btn btn-default btn-sm" data-bind="enable: concatEnabled(), click: concatFiles">
+        <i class="fa fa-angle-double-down"></i> Concat
+      </button>
 
       <div class="btn-group">
 	<button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" data-bind="enable: selectedItems().length">
@@ -44,7 +50,7 @@
 	  </button>
 	  <ul class="dropdown-menu" role="menu">
 	    <li><a href="#" data-toggle="modal" data-target="#newFile"><i class="fa fa-file-o"></i> File</a></li>
-	    <li><a href="#"><i class="fa fa-folder-open"></i> Folder</a></li>
+	    <li><a href="#" data-toggle="modal" data-target="#newDir"><i class="fa fa-folder-open"></i> Folder</a></li>
 	  </ul>
 	</div>
 	  
@@ -132,26 +138,5 @@
   </div> <!-- /Cluster -->
 </div> <!-- /main-content -->	
 
-
-<!-- Modals -->
-<!-- New File -->
-<div class="modal fade" id="newFile">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Create new file</h4>
-      </div>
-      <div class="modal-body">
-          <input type="text" class="form-control" id="fileName" placeholder="File name">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-default btn-success btn-sm">Create</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<!-- /New File -->
-<!-- /Modals -->	
+@views.html.dfs.modals()
 }
