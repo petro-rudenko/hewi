@@ -4,8 +4,9 @@
 @template("Distributed file system browser"){
 <link rel='stylesheet' href="@routes.Assets.at("stylesheets/dfs.css")">
 <script type="text/javascript" src='@routes.WebJarAssets.at(WebJarAssets.locate("knockout.js"))'></script>
+<script type="text/javascript" src='@routes.Assets.at("javascripts/filesize.min.js")'></script>
 <script type="text/javascript" src='@routes.Assets.at("javascripts/dfs.js")'></script>
-
+<!-- TODO: load scripts through require js -->
 
 <div class="main-content">
   <h2>Distributed file system browser</h2>
@@ -21,7 +22,9 @@
       </button>
       <button type="button" class="btn btn-default btn-sm" data-bind="enable: selectedItems().length"><i class="fa fa-exchange"></i> Move</button>
       <button type="button" class="btn btn-default btn-sm" data-bind="enable: selectedItems().length"><i class="fa fa-copy"></i> Copy</button>
-      <button type="button" class="btn btn-default btn-sm" data-bind="enable: selectedItems().length"><i class="fa fa-unlock-alt"></i> Change permission</button>
+      <button type="button" class="btn btn-default btn-sm" data-bind="enable: selectedItems().length" data-toggle="modal" data-target="#chmod">
+        <i class="fa fa-unlock-alt"></i> Change permission
+      </button>
       <button type="button" class="btn btn-default btn-sm" data-bind="enable: selectedItems().length" data-toggle="modal" data-target="#chown">
         <i class="fa fa-users"></i> Change owner
       </button>
@@ -96,28 +99,22 @@
         </tr>
       </thead>
       <tbody class="dfs-table">
-        <!-- ko ifnot: isRoot -->
+        <!-- ko foreach: parents -->
         <tr>
           <td></td>
-          <td><i class="fa fa-folder"></i></td>
-          <td>.</td>
+          <td>
+            <i class="fa fa-folder"></i>
+            <!-- ko if: isParentLink -->
+            <i class="fa fa-level-up"></i>
+            <!-- /ko -->
+          </td>
+          <td data-bind="text: name"></td>
           <td></td>
           <td></td>
-          <td>test</td>
-          <td>test</td>
-          <td>drwxr-xr-x</td>
-          <td>September 11, 2013 05:57 pm</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td><i class="fa fa-folder"></i><i class="fa fa-level-up"></i> </td>
-          <td>..</td>
-          <td></td>
-          <td></td>
-          <td>test</td>
-          <td>test</td>
-          <td>drwxr-xr-x</td>
-          <td>September 11, 2013 05:57 pm</td>
+          <td data-bind="text: owner"></td>
+          <td data-bind="text: group"></td>
+          <td data-bind="text: permission"></td>
+          <td data-bind="text: date"></td>
         </tr>
         <!-- /ko -->
         <!-- ko foreach: files -->
@@ -126,7 +123,7 @@
           <td><i data-bind="attr: {class: 'fa ' + fileTypeClass}"></i></td>
           <td data-bind="text: name"></td>
           <td data-bind="text: replication"></td>
-          <td>15kb</td>
+          <td data-bind="text: size"></td>
           <td data-bind="text: owner"></td>
           <td data-bind="text: group"></td>
           <td data-bind="text: permission"></td>

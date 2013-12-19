@@ -4,8 +4,8 @@ import net.fwbrasil.activate.ActivateContext
 import net.fwbrasil.activate.storage.StorageFactory
 import net.fwbrasil.activate.storage.memory.TransientMemoryStorage
 
-object AppContext extends ActivateContext{
-  
+object AppContext extends ActivateContext {
+
   val factory = play.api.Play.current.configuration.getString("activate.storage.factory").
     getOrElse("")
   val driver = play.api.Play.current.configuration.getString("activate.storage.jdbcDriver").

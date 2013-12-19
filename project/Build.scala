@@ -1,7 +1,8 @@
 import sbt._
 import Keys._
 import play.Project._
-
+import de.johoop.jacoco4sbt._
+import JacocoPlugin._
 
 object ApplicationBuild extends Build {
 
@@ -22,7 +23,10 @@ object ApplicationBuild extends Build {
     "org.apache.hadoop" % "hadoop-hdfs" % HADOOP_VERSION,
     "org.apache.hadoop" % "hadoop-common" % HADOOP_VERSION,
     "org.apache.hadoop" % "hadoop-mapreduce" % HADOOP_VERSION,
-    "org.apache.pig" % "pig" % "0.12.0",
+    "org.apache.hadoop" % "hadoop-mapreduce-client-hs" % HADOOP_VERSION,
+    "org.apache.hadoop" % "hadoop-client" % HADOOP_VERSION,
+    "org.apache.pig" % "pig" % "0.12.0" classifier "h2",
+    "dk.brics.automaton" % "automaton" % "1.11-8", //https://issues.apache.org/jira/browse/PIG-3315
     "org.apache.hive" % "hive-jdbc" % "0.12.0",
     "org.apache.hbase" % "hbase-common" % "0.96.0-hadoop2",
     "org.apache.hbase" % "hbase-client" % "0.96.0-hadoop2",
@@ -34,8 +38,8 @@ object ApplicationBuild extends Build {
     "net.fwbrasil" %% "activate-core" % "1.5-SNAPSHOT",
     "net.fwbrasil" %% "activate-play" % "1.4.1" exclude("org.scala-stm", "scala-stm_2.10.0"),
     "net.fwbrasil" %% "activate-jdbc" % "1.5-SNAPSHOT",
-    //"mysql" % "mysql-connector-java" % "5.1.26",
-    "com.unboundid" % "unboundid-ldapsdk" % "2.3.4",
+    "mysql" % "mysql-connector-java" % "5.1.27",
+    "com.unboundid" % "unboundid-ldapsdk" % "2.3.5",
     "jp.t2v" %% "play2-auth"      % "0.11.0",
     "jp.t2v" %% "play2-auth-test" % "0.11.0" % "test",
     "org.mindrot" % "jbcrypt" % "0.3m"
@@ -53,7 +57,6 @@ object ApplicationBuild extends Build {
       "Nexus Snapshot" at "https://oss.sonatype.org/content/repositories/snapshots",
       "Nexus release" at "https://oss.sonatype.org/service/local/staging/deploy/maven2"
     )).settings(org.scalastyle.sbt.ScalastylePlugin.Settings: _*).
-    settings(ScctPlugin.instrumentSettings : _*).
+    settings(jacoco.settings: _*).
     settings(net.virtualvoid.sbt.graph.Plugin.graphSettings: _*)
-
 }

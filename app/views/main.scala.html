@@ -5,7 +5,7 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-<html>
+  <html>
     <head>
       <title>Big data ui | @title</title>
       <meta name="viewport" content="width=device-width">
@@ -27,128 +27,130 @@
       
       <!-- HTML5 Shim, for IE6-IE8 support of HTML5 elements -->
       <!--[if lt IE 9]>
-	  <script src="@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap/assets/js/html5shiv.js"))"></script>
+      <script src="@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap/assets/js/html5shiv.js"))"></script>
       <![endif]-->
       <link rel='stylesheet' href="@routes.Assets.at("stylesheets/global.css")">
 
     </head>
     <body>
-    	
-    <!--[if lt IE 7]>
-        <p class="chromeframe">
-          You are using an <strong>outdated</strong> browser. 
-          Please <a href="http://browsehappy.com/">upgrade your browser</a> or 
-          <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.
-        </p>
-    <![endif]-->  
-    <header class="navbar navbar-default navbar-fixed-top navbar-inverse">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">HEWI</a>
-        </div>
-        <div class="navbar-collapse collapse navbar-inverse-collapse">
-          <ul class="nav navbar-nav" id="menu-nav">
-            <li>
-              <a class="btn btn-navbar btn-lg" href="/dfs" data-toggle="tooltip" data-placement="bottom" title data-original-title="Distributed File Systems">
-                <span class="glyphicon glyphicon-folder-open"></span>
-              </a>
-            </li>
-            <li>
-              <a class="btn btn-navbar btn-lg dropdown-toggle"  data-toggle="tooltip" data-placement="bottom" title data-original-title="Resource managers" href="#">
-                <span class="glyphicon glyphicon-tasks"></span>
-              </a>                	
-            </li>
-            
-            <li>
-              <a class="btn btn-navbar btn-lg" data-toggle="tooltip" data-placement="bottom" title data-original-title="SQL" href="#">
-                <span class="glyphicon glyphicon-th"></span>
-              </a>
-            </li>
-            
-            <li>
-              <a class="btn btn-navbar btn-lg" data-toggle="tooltip" data-placement="bottom" title data-original-title="Scrips" href="#">
-                <i class="fa fa-code"></i>
-              </a>
-            </li>
-            
-            <li>
-              <a class="btn btn-navbar btn-lg" data-toggle="tooltip" data-placement="bottom" title data-original-title="Streams" href="#">
-                <span class="glyphicon glyphicon-random"></span>
-              </a>
-            </li>
-            
-            <li>
-              <a class="btn btn-navbar btn-lg" data-toggle="tooltip" data-placement="bottom" title data-original-title="Workflows" href="#">
-                <i class="fa fa-cogs"></i>
-              </a>
-            </li>
-                
-            <li>
-              <a class="btn btn-navbar btn-lg" data-toggle="tooltip" data-placement="bottom" title data-original-title="Graphs" href="#">
-                <i class="fa fa-code-fork"></i>
-              </a>
-            </li>
-                
-            <li class="dropdown">
-              <a class="btn btn-navbar btn-lg dropdown-toggle"  class="dropdown-toggle" data-toggle="dropdown" data-placement="bottom" title data-original-title="Databases" href="#">
-                <span class="glyphicon glyphicon-th"></span><b class="caret"></b>
-              </a>
-              <ul class="dropdown-menu">
-                <li><a href="#"><i class="fa fa-h-square"></i>
+      
+      <!--[if lt IE 7]>
+      <p class="chromeframe">
+      You are using an <strong>outdated</strong> browser. 
+      Please <a href="http://browsehappy.com/">upgrade your browser</a> or 
+      <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.
+      </p>
+      <![endif]-->  
+      <header class="navbar navbar-default navbar-fixed-top navbar-inverse">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">HEWI</a>
+          </div>
+          <div class="navbar-collapse collapse navbar-inverse-collapse">
+            <ul class="nav navbar-nav" id="menu-nav">
+              <li>
+                <a class="btn btn-navbar btn-lg" href="/dfs" data-toggle="tooltip" data-placement="bottom" title data-original-title="Distributed File Systems">
+                  <span class="glyphicon glyphicon-folder-open"></span>
+                </a>
+              </li>
+              <li>
+                <a class="btn btn-navbar btn-lg dropdown-toggle"  data-toggle="tooltip" data-placement="bottom" title data-original-title="Resource managers" href="#">
+                  <span class="glyphicon glyphicon-tasks"></span>
+                </a>                	
+              </li>
+              
+              <li>
+                <a class="btn btn-navbar btn-lg" data-toggle="tooltip" data-placement="bottom" title data-original-title="SQL" href="#">
+                  <span class="glyphicon glyphicon-th"></span>
+                </a>
+              </li>
+              
+              <li>
+                <a class="btn btn-navbar btn-lg" data-toggle="tooltip" data-placement="bottom" title data-original-title="Scrips" href="#">
+                  <i class="fa fa-code"></i>
+                </a>
+              </li>
+              
+              <li>
+                <a class="btn btn-navbar btn-lg" data-toggle="tooltip" data-placement="bottom" title data-original-title="Streams" href="#">
+                  <span class="glyphicon glyphicon-random"></span>
+                </a>
+              </li>
+              
+              <li>
+                <a class="btn btn-navbar btn-lg" data-toggle="tooltip" data-placement="bottom" title data-original-title="Workflows" href="#">
+                  <i class="fa fa-cogs"></i>
+                </a>
+              </li>
+              
+              <li>
+                <a class="btn btn-navbar btn-lg" data-toggle="tooltip" data-placement="bottom" title data-original-title="Graphs" href="#">
+                  <i class="fa fa-code-fork"></i>
+                </a>
+              </li>
+              
+              <li class="dropdown">
+                <a class="btn btn-navbar btn-lg dropdown-toggle"  class="dropdown-toggle" data-toggle="dropdown" data-placement="bottom" title data-original-title="Databases" href="#">
+                  <span class="glyphicon glyphicon-th"></span><b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="#"><i class="fa fa-h-square"></i>
                     Hbase</a></li>
-                <li><a href="#"><i class="fa fa-adn"></i>
+                  <li><a href="#"><i class="fa fa-adn"></i>
                     Accumulo</a></li>
-                <li><a href="#"><i class="fa fa-eye"></i> Cassandra</a></li>
-                
-              </ul>
-            </li>
-            
-            <li class="dropdown">
-              <a class="btn btn-navbar btn-lg dropdown-toggle"  class="dropdown-toggle" data-toggle="dropdown" data-placement="bottom" title data-original-title="Data transport" href="#">
-                <span><i class="fa fa-truck"></i><i class="fa fa-caret-down"></i></span>
-              </a>
-              <ul class="dropdown-menu">
-                <li><a href="#"><i class="fa fa-table"></i>
+                  <li><a href="#"><i class="fa fa-eye"></i> Cassandra</a></li>
+                  
+                </ul>
+              </li>
+              
+              <li class="dropdown">
+                <a class="btn btn-navbar btn-lg dropdown-toggle"  class="dropdown-toggle" data-toggle="dropdown" data-placement="bottom" title data-original-title="Data transport" href="#">
+                  <span><i class="fa fa-truck"></i><i class="fa fa-caret-down"></i></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="#"><i class="fa fa-table"></i>
                     Sqoop</a></li>
-                <li><a href="#"><i class="fa fa-outdent"></i>
+                  <li><a href="#"><i class="fa fa-outdent"></i>
                     Flume</a></li>
-                <li><a href="#"><i class="fa fa-bug"></i> Kafka</a></li>
-                
-              </ul>
-            </li>
-            
-            <li class="dropdown">
-              <a class="btn btn-navbar btn-lg dropdown-toggle"  class="dropdown-toggle" data-toggle="dropdown" data-placement="bottom" title data-original-title="Data exploration" href="#">
-                <span class="glyphicon glyphicon-search"></span><b class="caret"></b>
-              </a>
-              <ul class="dropdown-menu">
-                <li><a href="#"><i class="fa fa-search"></i> Elasticsearch</a></li>
-                <li><a href="#"><i class="fa fa-lightbulb-o"></i> Mahout</a></li>
-                <li><a href="#"><i class="fa fa-filter"></i> Drill</a></li>
-                
-              </ul>
-            </li>
+                  <li><a href="#"><i class="fa fa-bug"></i> Kafka</a></li>
+                  
+                </ul>
+              </li>
+              
+              <li class="dropdown">
+                <a class="btn btn-navbar btn-lg dropdown-toggle"  class="dropdown-toggle" data-toggle="dropdown" data-placement="bottom" title data-original-title="Data exploration" href="#">
+                  <span class="glyphicon glyphicon-search"></span><b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="#"><i class="fa fa-search"></i> Elasticsearch</a></li>
+                  <li><a href="#"><i class="fa fa-lightbulb-o"></i> Mahout</a></li>
+                  <li><a href="#"><i class="fa fa-filter"></i> Drill</a></li>
+                  <li><a href="#"><i class="fa fa-th-list"></i> HCatalog</a></li>
+                </ul>
+              </li>
 
-                
-            <li>
-              <a class="btn btn-navbar btn-lg" data-toggle="tooltip" data-placement="bottom" title data-original-title="User management" href="/users">
-                <span class="glyphicon glyphicon-user"></span>
-              </a>
-            </li>
+              
+              <li>
+                <a class="btn btn-navbar btn-lg" data-toggle="tooltip" data-placement="bottom" title data-original-title="User management" href="/users">
+                  <span class="glyphicon glyphicon-user"></span>
+                </a>
+              </li>
+              
+            </ul>
             
-          </ul>
-          
-          <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navbar-right">
+            @if(user.isSuperuser){
             <li>
-              <a class="btn btn-navbar btn-lg" data-toggle="tooltip" data-placement="bottom" title data-original-title="Configuration" href="@routes.Config.index">
-                <i class="fa fa-wrench"></i>
-              </a>
+            <a class="btn btn-navbar btn-lg" data-toggle="tooltip" data-placement="bottom" title data-original-title="Configuration" href="@routes.Config.index">
+              <i class="fa fa-wrench"></i>
+            </a>
             </li>
+            }
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">@(user.username) <b class="caret"></b></a>
               <ul class="dropdown-menu">
@@ -157,16 +159,16 @@
                 <li><a href="@routes.Application.logout"><i class="fa fa-power-off"></i> Logout</a></li>
               </ul>
             </li>
-          </ul>
-        </div><!-- /.nav-collapse -->
-      </div>
-    </header> 
-    <main class="main-wrapper ">  
-     @content
-	</main>
-	
-	<footer>
-	</footer>
+            </ul>
+          </div><!-- /.nav-collapse -->
+        </div>
+      </header> 
+      <main class="main-wrapper ">  
+        @content
+      </main>
+      
+      <footer>
+      </footer>
 
     </body>
-</html>
+  </html>

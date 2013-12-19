@@ -1,15 +1,16 @@
 [[https://travis-ci.org/petro-rudenko/hewi/][https://travis-ci.org/petro-rudenko/hewi.png]]
 
-Hadoop Ecosystem Web Interface - attempt to make a user interface for various big data tools.
+Hadoop Ecosystem Web Interface - attempt to make a single user interface for various big data tools.
 
-* Distributed file systems browser:
-- [X]  [[http://i.imm.io/1kvBK.png]]
+* Distributed file systems:
+- [X]  HDFS:
+  [[http://i.imm.io/1kvBK.png]]
   
 * Scripting layer:
 - [ ] Pig
 - [ ] Cascading (Scalding, Cascalog)
 - [ ] Spark shell
-
+  
 * Sql layer:
 - [ ] Hive
 - [ ] [[https://github.com/amplab/shark/wiki][Shark]]
@@ -45,3 +46,5 @@ Hadoop Ecosystem Web Interface - attempt to make a user interface for various bi
 - [ ] Elasticsearch
 - [ ] Mahout
 - [ ] Drill
+- [ ] HCatalog
+- [ ] [[http://falcon.incubator.apache.org/][Falcon]]

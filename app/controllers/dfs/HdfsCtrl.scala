@@ -1,7 +1,6 @@
 package controllers.dfs
 
-import api.DfsApi
-import api.DfsImplicits._
+import api.dfs.Hdfs._
 import auth._
 import core.App
 import java.io._
@@ -13,14 +12,13 @@ import play.api._
 import play.api.data._
 import play.api.data.Forms._
 import play.api.libs.concurrent.Execution.Implicits._
-import play.api.libs.iteratee.{ Enumerator, Done, Iteratee }
+import play.api.libs.iteratee.{ Done, Enumerator, Iteratee }
 import play.api.libs.json._
 import play.api.mvc._
 import scala.annotation.tailrec
-import scala.concurrent.{ ExecutionContext, Future, Await }
+import scala.concurrent.{ Await, ExecutionContext, Future }
 import scala.concurrent.duration._
 import views._
-import play.api.libs.functional.syntax._
 
 trait UploadHandler extends Controller with AsyncAuth with AuthConfigImpl {
   import scala.concurrent.ExecutionContext.Implicits.global
@@ -28,7 +26,7 @@ trait UploadHandler extends Controller with AsyncAuth with AuthConfigImpl {
   def hdfsUploader(path: String)(implicit context: ExecutionContext) = BodyParser {
     request =>
       Iteratee.flatten(authorized(NormalUser)(request, context).map {
-        case Right(user) => parse.multipartFormData(DfsApi(user.username).hdfsUploadHandler(path))(request)
+        case Right(user)  => parse.multipartFormData(HdfsApi(user.username).hdfsUploadHandler(path))(request)
         case Left(result) => Done[Array[Byte], Either[SimpleResult, (Path, User)]](Left(result))
       })
   }
@@ -39,7 +37,7 @@ object DfsCtrl extends Controller with App with AuthElement with AsyncAuth with 
 
   def index = AsyncStack(AuthorityKey -> NormalUser) {
     implicit request =>
-      Future.successful(Redirect(routes.DfsCtrl.browse(DfsApi(loggedIn.username).homeDir())))
+      Future.successful(Redirect(routes.DfsCtrl.browse(HdfsApi(loggedIn.username).homeDir())))
   }
 
   def browse(path: String) = AsyncStack(AuthorityKey -> NormalUser) {
@@ -50,7 +48,7 @@ object DfsCtrl extends Controller with App with AuthElement with AsyncAuth with 
     implicit request =>
       Future.successful(
         try {
-          Ok(DfsApi(loggedIn.username).listdir(path).toJson)
+          Ok(HdfsApi(loggedIn.username).listdir(path).toJson)
         } catch {
           case ex: FileNotFoundException => NotFound(ex.getMessage)
         })
@@ -68,7 +66,7 @@ object DfsCtrl extends Controller with App with AuthElement with AsyncAuth with 
       value => {
         try {
           val path = new Path(value._1, value._2)
-          val dfs = DfsApi(loggedIn.username)
+          val dfs = HdfsApi(loggedIn.username)
           if (file) dfs.create(path).close()
           else dfs.mkdir(path)
           Future.successful(Ok(JsString(path.toString)))
@@ -87,22 +85,22 @@ object DfsCtrl extends Controller with App with AuthElement with AsyncAuth with 
   }
 
   def rename = AsyncStack(AuthorityKey -> NormalUser) {
-    implicit request => 
-    newFileForm.bindFromRequest.fold(
-      formWithErrors => {
-        Future.successful(BadRequest(formWithErrors.errorsAsJson).as("application/json"))
-      },
-      value => {
-        try {
-          val src = new Path(value._1)
-          val dst = new Path(src.getParent(), value._2)
-          val dfs = DfsApi(loggedIn.username)
-          dfs.rename(src, dst)
-          Future.successful(Ok(JsString(dst.toString)))
-        } catch {
-          case ex: Throwable => Future.successful(InternalServerError(ex.getMessage()))
-        }
-      })
+    implicit request =>
+      newFileForm.bindFromRequest.fold(
+        formWithErrors => {
+          Future.successful(BadRequest(formWithErrors.errorsAsJson).as("application/json"))
+        },
+        value => {
+          try {
+            val src = new Path(value._1)
+            val dst = new Path(src.getParent(), value._2)
+            val dfs = HdfsApi(loggedIn.username)
+            dfs.rename(src, dst)
+            Future.successful(Ok(JsString(dst.toString)))
+          } catch {
+            case ex: Throwable => Future.successful(InternalServerError(ex.getMessage()))
+          }
+        })
   }
 
   /**
@@ -116,7 +114,7 @@ object DfsCtrl extends Controller with App with AuthElement with AsyncAuth with 
       if (paths.length < 2) {
         Future.successful(BadRequest("Concat accepts 2 or more files"))
       } else {
-        val dfs = DfsApi(loggedIn.username)
+        val dfs = HdfsApi(loggedIn.username)
         val enumerators = paths map (p => Enumerator.fromStream(dfs.open(p).asInstanceOf[java.io.InputStream]))
         val enumerator = enumerators.foldLeft(Enumerator.empty[Array[Byte]]) { (enum, p) =>
           enum >>> p
@@ -133,7 +131,7 @@ object DfsCtrl extends Controller with App with AuthElement with AsyncAuth with 
    */
   def download(files: String) = AsyncStack(AuthorityKey -> NormalUser) {
     implicit request =>
-      val dfs = DfsApi(loggedIn.username)
+      val dfs = HdfsApi(loggedIn.username)
       val paths = files split "::"
       if (paths.length == 1) {
         val p = paths.head
@@ -147,7 +145,7 @@ object DfsCtrl extends Controller with App with AuthElement with AsyncAuth with 
       } else downloadGzip(paths, dfs)
   }
 
-  def downloadFile(path: String, dfs: DfsApi, length: Long) = {
+  def downloadFile(path: String, dfs: HdfsApi, length: Long) = {
     val data = dfs.open(path).asInstanceOf[java.io.InputStream]
     val dataContent: Enumerator[Array[Byte]] = Enumerator.fromStream(data)
     Future.successful(
@@ -156,7 +154,7 @@ object DfsCtrl extends Controller with App with AuthElement with AsyncAuth with 
         body = dataContent))
   }
 
-  def downloadGzip(paths: Seq[String], dfs: DfsApi) = {
+  def downloadGzip(paths: Seq[String], dfs: HdfsApi) = {
     @tailrec
     def writeGZipRecursively(pathAcc: List[Path], zip: ZipOutputStream): Unit = {
 
@@ -170,7 +168,7 @@ object DfsCtrl extends Controller with App with AuthElement with AsyncAuth with 
         val it = Iteratee.fold[Array[Byte], Unit](zip.putNextEntry(new ZipEntry(p.toString.tail))) { (_, bytes) =>
           zip.write(bytes)
         }
-        Await.result(dataContent.run(it) map (_ => zip.closeEntry()), 1000.seconds)
+        Await.result(dataContent.run(it) map (_ => zip.closeEntry()), 1000.seconds) //TODO: catch if exception occured and put filename_ERROR instead
       }
 
       if (pathAcc.isEmpty) return

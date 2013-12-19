@@ -2,10 +2,9 @@ package models
 import AppContext._
 import net.fwbrasil.activate.migration.Migration
 
-
 class CreateSchema extends Migration {
 
-  def timestamp = System.currentTimeMillis
+  def timestamp = 1
 
   def up = {
     createTableForAllEntities.ifNotExists

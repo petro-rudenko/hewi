@@ -1,10 +1,11 @@
 class File
         constructor: (data) ->
-                #self = @
-                { @isDirectory, @isSymLink, @isFile, @replication, @path, @owner, @group, @permission, @modification_time } = data
+                self = @
+                { @isDirectory, @isSymLink, @isFile, @replication, @path, @owner, @group, @permission, @modification_time, @length, @isParentLink } = data
+                @size = filesize(@length)
+                @date = new Date(@modification_time)
                 @selected = ko.observable(false)
                 #@selectItem = () -> console.log "ping"; self.selected(!self.selected()); return true;
-                @date = new Date(@modification_time)
                 [_, _...,@name] = @path.split "/"
                 if @isDirectory
                      @fileTypeClass = "fa-folder"
@@ -23,6 +24,13 @@ class DfsView
                 @pathComponents = ({link: "/" + (folders[0..folders.indexOf(f)]).join("/"), folderName: f} for f in folders)
                 @files = ko.observableArray([])
                 @isRoot = (@path() == "/")
+                @parents =
+                        if @isRoot
+                                []
+                        else
+                                [new File({owner: "test", group: "test", permission: "rrwrw--", modification_time: 12345, length: 123, path: "/1/.", isParentLink: false})
+                                 new File({owner: "test", group: "test", permission: "rrwrw--", modification_time: 12345, length: 123, path: "/1/..", isParentLink: true})]
+                        
                 @getData = () ->
                         $.getJSON "/dfs/listdir/" + @path(), (data) ->
                                 self.files(new File(f) for f in data)
@@ -76,7 +84,6 @@ class DfsView
                         $.post "/dfs/file/rename", {path: @selectedItems()[0].path, name: $("#renameDstName").val()}, () ->
                                 self.getData()
                                 $("#rename").modal('hide')
-                        
 
 $ ->
     ko.applyBindings(new DfsView)
